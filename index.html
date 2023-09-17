@@ -1,56 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Schedule</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('image.jfif'); /* Replace 'background.jpg' with your image URL */
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-        }
-
-        h1 {
-            font-size: 36px;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background color */
-        }
-
-        table, th, td {
-            border: 1px solid #fff;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-        }
-    </style>
+    <!-- Add other head elements as needed -->
 </head>
 <body>
     <div class="container">
-        <h1>THE INTERNATIONAL FANTASY</h1>
+        <h1>Game Schedule</h1>
         <table>
             <thead>
                 <tr>
@@ -64,109 +19,49 @@
                     <th>Day 7</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Player 1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 6</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 7</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 8</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 9</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Player 10</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tbody id="table-body">
+                <!-- JavaScript will populate this section -->
             </tbody>
         </table>
     </div>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        // Initialize the Google API client library with your API key
+        gapi.load('client', function() {
+            gapi.client.init({
+                apiKey: 'AIzaSyCz1apkkitAszpTgAScufFOaYjwlm9ySDc'
+            }).then(function() {
+                // Load the Google Sheets API
+                return gapi.client.load('sheets', 'v4');
+            }).then(function() {
+                // Specify the spreadsheet ID and range you want to retrieve data from
+                var spreadsheetId = '1Ext-kQC3gX4otXvhj-86DnVXnRl0mRMtlEI8cPamqz0/edit#gid=0';
+                var range = 'Sheet1!A1:H15'; // Modify this to match your data range
+
+                // Use the Sheets API to retrieve data
+                return gapi.client.sheets.spreadsheets.values.get({
+                    spreadsheetId: spreadsheetId,
+                    range: range
+                });
+            }).then(function(response) {
+                var values = response.result.values;
+
+                // Populate the table cells with data
+                var tbody = document.getElementById('table-body');
+                for (var i = 0; i < values.length; i++) {
+                    var row = document.createElement('tr');
+                    for (var j = 0; j < values[i].length; j++) {
+                        var cell = document.createElement('td');
+                        cell.textContent = values[i][j];
+                        row.appendChild(cell);
+                    }
+                    tbody.appendChild(row);
+                }
+            }, function(reason) {
+                console.error('Error: ' + reason.result.error.message);
+            });
+        });
+    </script>
 </body>
 </html>
