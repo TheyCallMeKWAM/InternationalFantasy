@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Add other head elements as needed -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Schedule</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
 </head>
 <body>
     <div class="container">
@@ -19,49 +24,24 @@
                     <th>Day 7</th>
                 </tr>
             </thead>
-            <tbody id="table-body">
-                <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-        // Initialize the Google API client library with your API key
-        gapi.load('client', function() {
-            gapi.client.init({
-                apiKey: 'AIzaSyCz1apkkitAszpTgAScufFOaYjwlm9ySDc'
-            }).then(function() {
-                // Load the Google Sheets API
-                return gapi.client.load('sheets', 'v4');
-            }).then(function() {
-                // Specify the spreadsheet ID and range you want to retrieve data from
-                var spreadsheetId = '1Ext-kQC3gX4otXvhj-86DnVXnRl0mRMtlEI8cPamqz0/edit#gid=0';
-                var range = 'Sheet1!A1:H15'; // Modify this to match your data range
-
-                // Use the Sheets API to retrieve data
-                return gapi.client.sheets.spreadsheets.values.get({
-                    spreadsheetId: spreadsheetId,
-                    range: range
-                });
-            }).then(function(response) {
-                var values = response.result.values;
-
-                // Populate the table cells with data
-                var tbody = document.getElementById('table-body');
-                for (var i = 0; i < values.length; i++) {
-                    var row = document.createElement('tr');
-                    for (var j = 0; j < values[i].length; j++) {
-                        var cell = document.createElement('td');
-                        cell.textContent = values[i][j];
-                        row.appendChild(cell);
-                    }
-                    tbody.appendChild(row);
-                }
-            }, function(reason) {
-                console.error('Error: ' + reason.result.error.message);
-            });
-        });
-    </script>
+            <tbody>
+                <tr>
+                    <td>Player 1</td>
+                    <td><input type="text" class="player1-day1" onchange="updateTableCell('player1-day1', 1, 1)"></td>
+                    <td><input type="text" class="player1-day2" onchange="updateTableCell('player1-day2', 1, 2)"></td>
+                    <!-- Repeat the above input fields for all 9 players and 7 days -->
+                </tr>
+                <!-- Repeat the above row for all 9 players -->
             </tbody>
         </table>
     </div>
 
-    
+    <script>
+        function updateTableCell(inputClass, row, col) {
+            const inputValue = document.querySelector(`.${inputClass}`).value;
+            const cell = document.querySelector(`table tbody tr:nth-child(${row}) td:nth-child(${col + 1})`);
+            cell.textContent = inputValue;
+        }
+    </script>
 </body>
 </html>
