@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Schedule</title>
+    <title>THE INTERNATIONAL FANTASY</title>
     <style>
         body {
             margin: 0;
@@ -23,7 +23,7 @@
         }
 
         h1 {
-            font-size: 36px;
+            font-size: 48px;
         }
 
         table {
@@ -62,38 +62,42 @@
                     <th>Day 5</th>
                     <th>Day 6</th>
                     <th>Day 7</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Player 1</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td></td>
+                    <td>6</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 4</td>
@@ -104,6 +108,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 5</td>
@@ -114,6 +119,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 6</td>
@@ -124,6 +130,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 7</td>
@@ -134,6 +141,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 8</td>
@@ -144,6 +152,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 9</td>
@@ -154,6 +163,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 10</td>
@@ -164,9 +174,30 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td class="total">0</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <script>
+        // Get all the player rows
+        const playerRows = document.querySelectorAll('tbody tr');
+    
+        // Loop through each player row
+        playerRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let total = 0;
+    
+            // Loop through each cell (except the first one, which is the player's name)
+            for (let i = 1; i < cells.length - 1; i++) {
+                // Parse the cell value as a number and add it to the total
+                total += parseInt(cells[i].textContent) || 0;
+            }
+    
+            // Update the total cell with the calculated total
+            cells[cells.length - 1].textContent = total;
+        });
+    </script>
+    
 </body>
 </html>
