@@ -3,55 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>THE INTERNATIONAL FANTASY</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('image.jfif'); /* Replace 'background.jpg' with your image URL */
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
-        }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-        }
-
-        h1 {
-            font-size: 48px;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background color */
-        }
-
-        table, th, td {
-            border: 1px solid #fff;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>THE INTERNATIONAL FANTASY</h1>
-        <table>
+        <div class="sort-buttons">
+            <button onclick="sortTableByDay(1)">DAY 1</button>
+            <button onclick="sortTableByDay(2)">DAY 2</button>
+            <button onclick="sortTableByDay(3)">DAY 3</button>
+            <button onclick="sortTableByDay(4)">DAY 4</button>
+            <button onclick="sortTableByDay(5)">DAY 5</button>
+            <button onclick="sortTableByDay(6)">DAY 6</button>
+            <button onclick="sortTableByDay(7)">DAY 7</button>
+            <button onclick="sortTableByTotal()">TOTAL</button>
+        </div>
+        <script>
+            // Function to sort the table by a specific day (1-7)
+            function sortTableByDay(day) {
+                const table = document.getElementById('scheduleTable');
+                const rows = Array.from(table.querySelectorAll('tbody tr'));
+        
+                rows.sort((a, b) => {
+                    const cellA = parseInt(a.querySelectorAll('td')[day].textContent) || 0;
+                    const cellB = parseInt(b.querySelectorAll('td')[day].textContent) || 0;
+                    return cellB - cellA;
+                });
+        
+                rows.forEach(row => table.tBodies[0].appendChild(row));
+            }
+        
+            // Function to sort the table by total
+            function sortTableByTotal() {
+                const table = document.getElementById('scheduleTable');
+                const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+                rows.sort((a, b) => {
+                    const cellA = parseInt(a.querySelector('td.total').textContent) || 0;
+                    const cellB = parseInt(b.querySelector('td.total').textContent) || 0;
+                    return cellB - cellA;
+                });
+
+                rows.forEach(row => table.tBodies[0].appendChild(row));
+            }
+
+            // Sort the table by Total when the page loads
+            sortTableByTotal();
+        </script>
+        
+        <table id="scheduleTable">
             <thead>
                 <tr>
                     <th></th> <!-- Empty cell for alignment -->
@@ -68,9 +70,9 @@
             <tbody>
                 <tr>
                     <td>Player 1</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -79,9 +81,9 @@
                 </tr>
                 <tr>
                     <td>Player 2</td>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -90,10 +92,10 @@
                 </tr>
                 <tr>
                     <td>Player 3</td>
-                    <td>4</td>
-                    <td>5</td>
                     <td></td>
-                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -176,13 +178,47 @@
                     <td></td>
                     <td class="total">0</td>
                 </tr>
+                <tr>
+                    <td>Player 11</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="total">0</td>
+                </tr>
             </tbody>
         </table>
-    </div>
+    
     <script>
+        // Player Name Input
+        const playerNames = [
+        "William",
+        "Player 2",
+        "Player 3",
+        "Player 4",
+        "Player 5",
+        "Player 6",
+        "Player 7",
+        "Player 8",
+        "Player 9",
+        "Aiden",
+        "Player 11"
+        ];
+
         // Get all the player rows
         const playerRows = document.querySelectorAll('tbody tr');
-    
+
+        // Loop through each player row and set the player's name
+        playerRows.forEach((row, index) => {
+            const cells = row.querySelectorAll('td');
+            if (index < playerNames.length) {
+                cells[0].textContent = playerNames[index];
+            }
+        });
+            
         // Loop through each player row
         playerRows.forEach(row => {
             const cells = row.querySelectorAll('td');
@@ -198,6 +234,53 @@
             cells[cells.length - 1].textContent = total;
         });
     </script>
-    
+
+    <table id="highestScorerTable">
+        <thead>
+            <tr>
+                <th>Highest Single Day Score</th>
+                <th>Score</th>
+                <th>Highest Single Player Score</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="highestScorerName">-</td>
+                <td id="highestScorerScore">-</td>
+                <td id="highestPlayerName">-</td>
+                <td id="highestPlayerScore">-</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        // Function to find and display the highest scorer
+        function findHighestScorer() {
+            const table = document.getElementById('scheduleTable');
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            let highestScorer = '';
+            let highestScore = 0;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                for (let i = 1; i < cells.length - 1; i++) {
+                    const score = parseInt(cells[i].textContent) || 0;
+                    if (score > highestScore) {
+                        highestScore = score;
+                        highestScorer = cells[0].textContent;
+                    }
+                }
+            });
+
+            // Update the highest scorer table
+            document.getElementById('highestScorerName').textContent = highestScorer;
+            document.getElementById('highestScorerScore').textContent = highestScore;
+        }
+
+        // Call the function to find and display the highest scorer
+        findHighestScorer();
+    </script>
+
+</div>
 </body>
 </html>
