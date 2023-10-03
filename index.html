@@ -18,6 +18,9 @@
             <button onclick="sortTableByDay(5)">DAY 5</button>
             <button onclick="sortTableByDay(6)">DAY 6</button>
             <button onclick="sortTableByDay(7)">DAY 7</button>
+            <button onclick="sortTableByDay(8)">DAY 8</button>
+            <button onclick="sortTableByDay(9)">DAY 9</button>
+            <button onclick="sortTableByDay(10)">DAY 10</button>
             <button onclick="sortTableByTotal()">TOTAL</button>
         </div>
         <script>
@@ -64,12 +67,18 @@
                     <th>Day 5</th>
                     <th>Day 6</th>
                     <th>Day 7</th>
+                    <th>Day 8</th>
+                    <th>Day 9</th>
+                    <th>Day 10</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>PLayer 1</td>
+                    <td>Player 1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -88,10 +97,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -110,10 +125,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -132,10 +153,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -154,10 +181,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -176,10 +209,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="total">0</td>
                 </tr>
                 <tr>
                     <td>Player 11</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -200,10 +239,10 @@
         "Daniel",
         "Evan",
         "Sean",
-        "The Riblin",
+        "Syd",
         "Vico",
         "Michael",
-        "Baby J",
+        "Jake",
         "David",
         "Tommy"
         ];
@@ -235,51 +274,83 @@
         });
     </script>
 
-    <table id="highestScorerTable">
+    <table id="highestTotalTable">
         <thead>
             <tr>
-                <th>Highest Single Day Score</th>
+                <th>Highest Group Stage Total</th>
                 <th>Score</th>
-                <th>Highest Single Player Score</th>
+                <th>Highest Playoff Total</th>
+                <th>Score</th>
+                <th>Highest Finals Total</th>
                 <th>Score</th>
             </tr>
         </thead>
         <tbody>
+            <!-- Row for Highest Group Stage Total -->
             <tr>
-                <td id="highestScorerName">-</td>
-                <td id="highestScorerScore">-</td>
-                <td id="highestPlayerName">-</td>
-                <td id="highestPlayerScore">-</td>
+                <td id="highestGroupStageType">-</td>
+                <td id="highestGroupStageScore">-</td>
+                <td id="highestPlayoffType">-</td>
+                <td id="highestPlayoffScore">-</td>
+                <td id="highestFinalsType">-</td>
+                <td id="highestFinalsScore">-</td>
             </tr>
         </tbody>
     </table>
-    <script>
-        // Function to find and display the highest scorer
-        function findHighestScorer() {
-            const table = document.getElementById('scheduleTable');
-            const rows = Array.from(table.querySelectorAll('tbody tr'));
-            let highestScorer = '';
-            let highestScore = 0;
+</div>
 
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                for (let i = 1; i < cells.length - 1; i++) {
-                    const score = parseInt(cells[i].textContent) || 0;
-                    if (score > highestScore) {
-                        highestScore = score;
-                        highestScorer = cells[0].textContent;
-                    }
-                }
-            });
+<script>
+    // Function to calculate and display the highest total scores
+    function calculateTotalScores() {
+        const table = document.getElementById('scheduleTable');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        
+        let highestGroupStage = { player: '-', score: 0 };
+        let highestPlayoff = { player: '-', score: 0 };
+        let highestFinals = { player: '-', score: 0 };
 
-            // Update the highest scorer table
-            document.getElementById('highestScorerName').textContent = highestScorer;
-            document.getElementById('highestScorerScore').textContent = highestScore;
-        }
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const playerName = cells[0].textContent;
+            let groupStageScore = 0;
+            let playoffScore = 0;
+            let finalsScore = 0;
 
-        // Call the function to find and display the highest scorer
-        findHighestScorer();
-    </script>
+            // Calculate the scores for each category
+            for (let i = 1; i <= 4; i++) {
+                groupStageScore += parseInt(cells[i].textContent) || 0;
+            }
+            for (let i = 5; i <= 7; i++) {
+                playoffScore += parseInt(cells[i].textContent) || 0;
+            }
+            for (let i = 8; i <= 10; i++) {
+                finalsScore += parseInt(cells[i].textContent) || 0;
+            }
+
+            // Update highest scores if needed
+            if (groupStageScore > highestGroupStage.score) {
+                highestGroupStage = { player: playerName, score: groupStageScore };
+            }
+            if (playoffScore > highestPlayoff.score) {
+                highestPlayoff = { player: playerName, score: playoffScore };
+            }
+            if (finalsScore > highestFinals.score) {
+                highestFinals = { player: playerName, score: finalsScore };
+            }
+        });
+
+        // Update the highest total table
+        document.getElementById('highestGroupStageType').textContent = highestGroupStage.player;
+        document.getElementById('highestGroupStageScore').textContent = highestGroupStage.score;
+        document.getElementById('highestPlayoffType').textContent = highestPlayoff.player;
+        document.getElementById('highestPlayoffScore').textContent = highestPlayoff.score;
+        document.getElementById('highestFinalsType').textContent = highestFinals.player;
+        document.getElementById('highestFinalsScore').textContent = highestFinals.score;
+    }
+
+    // Call the function to calculate and display the highest total scores
+    calculateTotalScores();
+</script>
 
 </div>
 </body>
