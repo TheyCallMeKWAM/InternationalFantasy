@@ -7,9 +7,11 @@
     <title>THE INTERNATIONAL FANTASY</title>
 
 </head>
+
 <body>
     <div class="container">
         <h1>THE INTERNATIONAL FANTASY</h1>
+        <h2>SORT BY DAY</h2>
         <div class="sort-buttons">
             <button onclick="sortTableByDay(1)">DAY 1</button>
             <button onclick="sortTableByDay(2)">DAY 2</button>
@@ -23,6 +25,7 @@
             <button onclick="sortTableByDay(10)">DAY 10</button>
             <button onclick="sortTableByTotal()">TOTAL</button>
         </div>
+
         <script>
             // Function to sort the table by a specific day (1-7)
             function sortTableByDay(day) {
@@ -55,6 +58,7 @@
             // Sort the table by Total when the page loads
             sortTableByTotal();
         </script>
+        
         
         <table id="scheduleTable">
             <thead>
@@ -230,6 +234,8 @@
                 </tr>
             </tbody>
         </table>
+
+       
     
     <script>
         // Player Name Input
@@ -352,6 +358,10 @@
     calculateTotalScores();
 </script>
 
+    <div class="sort-buttons">
+        <a href="">PLAYER POINT BREAKDOWN</a>
+        <a href="">TOTAL SCORE BREAKDOWN</a>
+    </div>
 </div>
 </body>
 </html>

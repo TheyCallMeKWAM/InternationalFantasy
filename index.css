@@ -10,7 +10,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     color: #fff;
 }
@@ -23,7 +23,7 @@ margin: 10px 0;
 text-align: center;
 }
 
-.sort-buttons button {
+.sort-buttons button, a {
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: 800;
     border: none;
@@ -33,6 +33,7 @@ text-align: center;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 .sort-buttons button:hover {
