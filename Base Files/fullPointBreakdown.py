@@ -214,6 +214,3 @@ for index in range(len(summary_data['Team'])):
     summary_data['TotalFantasyPoints'][index] = total_points
 
 summary_df = pd.DataFrame(summary_data)
-
-# Export summary DataFrame to an Excel file
-summary_df.to_excel('match_summary.xlsx', index=False)

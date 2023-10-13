@@ -96,7 +96,7 @@ def extract_player_stats(match_data):
 
 def extract_match_stats(match_id):
     match_data = get_match_details(match_id)
-    if match_data:
+    if match_data is not None:
         radiant_team_name = match_data['radiant_team']['name']
         dire_team_name = match_data['dire_team']['name']
         
