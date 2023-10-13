@@ -13,7 +13,7 @@ deathPoints = -1
 lasthitPoints = 0.02
 denyPoints = 0.02
 wardsPlaced = 0.2
-winUnder25 = 15
+winUnder25Bonus = 15
 KABonus = 2
 winBonus = 15
 
@@ -42,7 +42,7 @@ def get_match_details(match_id):
         return response.json()
     else:
         print(f"Error fetching data for match {match_id}: {response.status_code}")
-        return None
+    return None
 
 def calculate_fantasy_points(player, game_duration):
     kills = player['kills'] * killPoints
@@ -53,18 +53,28 @@ def calculate_fantasy_points(player, game_duration):
     obs_placed = player.get('obs_placed', 0) or 0
     sen_placed = player.get('sen_placed', 0) or 0
     wards_placed = (obs_placed + sen_placed) * wardsPlaced
+
     total_points = kills + assists + deaths + last_hits + denies + wards_placed
-    # Check if the game duration is under 25 minutes and the player is on the winning team
+
+    #Adds All Bonus Points after getting score
+    if player['kills'] + player['assists'] > 20:
+        total_points += KABonus
+
     if game_duration < 25 and player['win'] == 1:
-        total_points += winUnder25  # Add 15 bonus points
+        total_points += winUnder25Bonus
+
+    if player['win'] == 1:
+        total_points += winBonus
     return round(total_points, 2)
 
+
 def extract_player_stats(match_data):
-    game_duration = match_data['duration'] // 60  # Convert duration to minutes
+    game_duration = match_data['duration'] // 60
     for player in match_data['players']:
         player_name = player.get('name', player.get('personaname', 'Unknown Player'))
         pro_name = player.get('name', 'Unknown Player')
-        # Check if the player has a professional name
+
+        #Gets Pros Name and Sets all Values for them to 0
         if pro_name != 'Unknown Player':
             player_name = pro_name
         player_stats.setdefault(player_name, {
@@ -74,25 +84,17 @@ def extract_player_stats(match_data):
             'LastHits': 0,
             'Denies': 0,
             'WardsPlaced': 0,
-            'KABonus': 0,
-            'WinBonus': 0,
             'FantasyPoints': 0,
         })
+        #Gets all Stats from Game Data
         player_stats[player_name]['Kills'] += player['kills']
         player_stats[player_name]['Deaths'] += player['deaths']
         player_stats[player_name]['Assists'] += player['assists']
         player_stats[player_name]['LastHits'] += player['last_hits']
         player_stats[player_name]['Denies'] += player['denies']
-        obs_placed = player.get('obs_placed', 0) or 0
-        sen_placed = player.get('sen_placed', 0) or 0
-        player_stats[player_name]['WardsPlaced'] += (obs_placed + sen_placed)
+        player_stats[player_name]['WardsPlaced'] += wardsPlaced
+        #Calls for the Calculation of the Data
         player_stats[player_name]['FantasyPoints'] += calculate_fantasy_points(player, game_duration)
-        # Check if K/A Bonus is earned
-        if player['kills'] + player['assists'] > 20:
-            player_stats[player_name]['KABonus'] += KABonus
-        # Check if the player is on the winning team and the game duration is under 25 minutes
-        if player['win'] == 1 and game_duration < 25:
-            player_stats[player_name]['WinBonus'] += winBonus
 
 def extract_match_stats(match_id):
     match_data = get_match_details(match_id)
@@ -110,6 +112,7 @@ def extract_match_stats(match_id):
 def calculate_match_stats(match_data):
     radiant_towers_taken = 11 - bin(match_data['tower_status_radiant']).count('1')
     dire_towers_taken = 11 - bin(match_data['tower_status_dire']).count('1')
+
 
     radiant_barracks_taken = 6 - bin(match_data['barracks_status_radiant']).count('1')
     dire_barracks_taken = 6 - bin(match_data['barracks_status_dire']).count('1')
@@ -159,8 +162,7 @@ for match_id in match_ids:
 # Create a DataFrame with player names, stats, K/A Bonus, Win Bonus, and total fantasy points
 players_data_df = pd.DataFrame.from_dict(player_stats, orient='index')
 
-# Reorder columns to have KABonus and WinBonus after Assists
-players_data_df = players_data_df[['Kills', 'Deaths', 'Assists', 'KABonus', 'LastHits', 'Denies', 'WardsPlaced', 'WinBonus', 'FantasyPoints']]
+players_data_df = players_data_df[['Kills', 'Deaths', 'Assists', 'LastHits', 'Denies', 'WardsPlaced', 'FantasyPoints']]
 
 # Initialize the summary_data dictionary with empty lists
 summary_data = {
@@ -218,6 +220,8 @@ for index in range(len(summary_data['Team'])):
         3 * summary_data['Roshans'][index] +
         2 * summary_data['FirstBloods'][index]
     )
+
+    
     summary_data['TotalFantasyPoints'][index] = total_points
 
 summary_df = pd.DataFrame(summary_data)
