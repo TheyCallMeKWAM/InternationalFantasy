@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('image.jfif'); /* Replace 'background.jpg' with your image URL */
+    background-image: url('image.jfif');
     background-size: cover;
     background-position: center;
     font-family: Arial, sans-serif;
@@ -18,12 +18,14 @@ body {
 h1 {
     font-size: 55px;
 }
+
 .sort-buttons {
-margin: 10px 0;
-text-align: center;
+    margin: 10px 0;
+    text-align: center;
 }
 
-.sort-buttons button, a {
+.sort-buttons button,
+.sort-buttons a {
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: 800;
     border: none;
@@ -40,18 +42,22 @@ text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-table, #highestScorerTable {
+table,
+#highestScorerTable {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background color */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid #fff;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     text-align: center;
 }
@@ -59,4 +65,25 @@ th, td {
 th {
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
+}
+
+/* Media query for smaller screens (e.g., phones) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px; /* Decrease font size for smaller screens */
+    }
+
+    .sort-buttons button,
+    .sort-buttons a {
+        padding: 8px 16px; /* Adjust padding for smaller screens */
+    }
+
+    th,
+    td {
+        padding: 8px; /* Adjust table cell padding for smaller screens */
+    }
+
+    th {
+        font-size: 18px; /* Decrease font size for table headers on smaller screens */
+    }
 }
