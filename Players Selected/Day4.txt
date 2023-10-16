@@ -1,0 +1,13 @@
+William - shiro,NothingToSay,Topson,skiter,planet,Nine, LGD
+Aiden - Topson,skiter,gpk~,Nightfall,Nine,Sneyking,. BetBoom
+Daniel - Topson,skiter,NothingToSay,shiro,Nine,Sneyking, LGD
+Evan - Topson,skiter,niu,shiro,Sneyking,planet,Tundra
+Sean - Nightfall,Lou,Somnus,Pure~,TORONTOTOKYO,fy, LGD
+Syd - Topson,skiter,NothingToSay,shiro,Nine,Sneyking, LGD
+Vico - NothingToSay,skiter,Topson,shiro,Nine,Sneyking, LGD
+Michael - Topson,skiter,NothingToSay,shiro,Nine,Sneyking, LGD
+Jake - Nightfall,Lou,Somnus,Pure~,TORONTOTOKYO,fy,LGD
+David - Nightfall,Lou,Somnus,Pure~,TORONTOTOKYO,fy,LGD
+Tommy - Nightfall,K1 tqmD,Moo,gpk~,TORONTOTOKYO,Yamsun, BETBOOM
+
+7383689600,7383785611,7383855952,7383951137,7384021535,7384067209,7384108524,7384142800,7384188114
